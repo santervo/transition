@@ -30,6 +30,7 @@ var Transition = function(element, transform, duration, delay) {
   };
   self.setTransform = function() {
     elem.css('-webkit-transform', transform);
+    elem.css('-webkit-transition-property','-webkit-transform');
     if (remainingDelay > 0) 
       elem.css('-webkit-transition-delay', remainingDelay + 'ms');
     if (remainingDuration > 0)
