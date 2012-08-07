@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--script src="http://code.jquery.com/jquery.min.js"></script-->
+    <script src="lib/jquery-1.7.2.min.js"></script>
+    <script src="../transition.js"></script>
+    <style>
+      .container {
+        position: absolute;
+        top: 300px;
+        left: 500px;
+        width: 200px;
+        height: 200px;
+        background: red;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Opacity example</h1>
+    <p>
+      5 sec delay and 10 sec duration for transformation. Click box to pause and resume.
+    </p>
+    <div class="container">
+    </div>
+    <script type="text/javascript">
+      $(function() {
+          var c = $('.container') 
+          var t = new Transition(c, 'opacity', '0', 10000, 5000);
+          c.click(function() {
+              t.toggle();
+          });
+     });
+    </script>
+  </body>
+</html>
