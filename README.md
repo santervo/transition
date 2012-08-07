@@ -19,6 +19,10 @@ Resuming transition:
 
     t.resume();
 
+Toggling pause/resume:
+
+    t.toggle();
+
 ## Requirements
 
 - JQuery
