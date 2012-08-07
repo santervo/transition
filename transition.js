@@ -1,4 +1,4 @@
-var Transition = function(element, transform, duration, delay) {
+var Transition = function(element, property, transform, duration, delay) {
   var self = this;
   var elem = $(element);
   var start;
@@ -29,16 +29,16 @@ var Transition = function(element, transform, duration, delay) {
     }
   };
   self.setTransform = function() {
-    elem.css('-webkit-transform', transform);
-    elem.css('-webkit-transition-property','-webkit-transform');
+    elem.css(property, transform);
+    elem.css('-webkit-transition-property', property);
     if (remainingDelay > 0) 
       elem.css('-webkit-transition-delay', remainingDelay + 'ms');
     if (remainingDuration > 0)
       elem.css('-webkit-transition-duration', remainingDuration + 'ms'); 
   };
   self.unsetTransform = function() {
-    var transform = window.getComputedStyle(elem[0]).webkitTransform;
-    elem.css('-webkit-transform', transform);
+    var transform = window.getComputedStyle(elem[0])[property];
+    elem.css(property, transform);
     elem.css('-webkit-transition-delay', '0ms');
     elem.css('-webkit-transition-duration', '0ms');
   };
