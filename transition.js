@@ -6,6 +6,26 @@ var Transition = function(element, property, transform, duration, delay) {
   var remainingDuration = duration;
   var paused = true;
 
+
+  // Borrowed from jquery.transit.js
+  var div = document.createElement('div');
+  function getVendorPropertyName(prop) {
+    var prefixes = ['Moz', 'Webkit', 'O', 'ms'];
+    var prop_ = prop.charAt(0).toUpperCase() + prop.substr(1);
+
+    if (prop in div.style) { return prop; }
+
+    for (var i=0; i<prefixes.length; ++i) {
+      var vendorProp = prefixes[i] + prop_;
+      if (vendorProp in div.style) { return vendorProp; }
+    }
+  }
+
+  var vendorProperty = getVendorPropertyName(property);
+  var transitionProperty = getVendorPropertyName('transitionProperty');
+  var transitionDelay = getVendorPropertyName('transitionDelay');
+  var transitionDuration = getVendorPropertyName('transitionDuration');
+
   self.pause = function() {
     self.countRemaining();
     self.unsetTransform();
@@ -29,18 +49,18 @@ var Transition = function(element, property, transform, duration, delay) {
     }
   };
   self.setTransform = function() {
-    elem.css(property, transform);
-    elem.css('-webkit-transition-property', property);
+    elem.css(vendorProperty, transform);
+    elem.css(transitionProperty, vendorProperty);
     if (remainingDelay > 0) 
-      elem.css('-webkit-transition-delay', remainingDelay + 'ms');
+      elem.css(transitionDelay, remainingDelay + 'ms');
     if (remainingDuration > 0)
-      elem.css('-webkit-transition-duration', remainingDuration + 'ms'); 
+      elem.css(transitionDuration, remainingDuration + 'ms'); 
   };
   self.unsetTransform = function() {
-    var transform = window.getComputedStyle(elem[0])[property];
-    elem.css(property, transform);
-    elem.css('-webkit-transition-delay', '0ms');
-    elem.css('-webkit-transition-duration', '0ms');
+    var transform = window.getComputedStyle(elem[0])[vendorProperty];
+    elem.css(vendorProperty, transform);
+    elem.css(transitionDelay, '0ms');
+    elem.css(transitionDuration, '0ms');
   };
   self.countRemaining = function() {
     var duration = new Date - start;
