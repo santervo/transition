@@ -23,3 +23,9 @@ Resuming transition:
 
 - JQuery
 
+## Tested on
+
+- Safari
+- Firefox (Mac)
+- Chrome (Mac)
+
