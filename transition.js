@@ -9,6 +9,7 @@ var Transition = function(element, property, transform, duration, delay) {
 
   // Borrowed from jquery.transit.js
   var div = document.createElement('div');
+  console.log(div.style);
   function getVendorPropertyName(prop) {
     var prefixes = ['Moz', 'Webkit', 'O', 'ms'];
     var prop_ = prop.charAt(0).toUpperCase() + prop.substr(1);
@@ -20,8 +21,21 @@ var Transition = function(element, property, transform, duration, delay) {
       if (vendorProp in div.style) { return vendorProp; }
     }
   }
+  function getVendorCssPropertyName(prop) {
+    var prefixes = ['Moz', 'Webkit', 'O', 'ms'];
+    var prop_ = prop.charAt(0).toUpperCase() + prop.substr(1);
+
+    if (prop in div.style) { return prop; }
+
+    for (var i=0; i<prefixes.length; ++i) {
+      var vendorProp = prefixes[i] + prop_;
+      if (vendorProp in div.style) { return "-" + prefixes[i].toLowerCase() + "-" + prop; }
+    }
+  }
+
 
   var vendorProperty = getVendorPropertyName(property);
+  var vendorCssProperty = getVendorCssPropertyName(property);
   var transitionProperty = getVendorPropertyName('transitionProperty');
   var transitionDelay = getVendorPropertyName('transitionDelay');
   var transitionDuration = getVendorPropertyName('transitionDuration');
@@ -50,7 +64,7 @@ var Transition = function(element, property, transform, duration, delay) {
   };
   self.setTransform = function() {
     elem.css(vendorProperty, transform);
-    elem.css(transitionProperty, vendorProperty);
+    elem.css(transitionProperty, vendorCssProperty);
     if (remainingDelay > 0) 
       elem.css(transitionDelay, remainingDelay + 'ms');
     if (remainingDuration > 0)
