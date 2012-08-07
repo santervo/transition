@@ -41,14 +41,14 @@ var Transition = function(element, property, transform, duration, delay) {
   var transitionDuration = getVendorPropertyName('transitionDuration');
 
   self.pause = function() {
-    self.countRemaining();
-    self.unsetTransform();
-    paused = true;
-    console.log("Remaining delay: " +remainingDelay);
-    console.log("Remaining duration: "+remainingDuration);
+    if (!paused) {
+      self.countRemaining();
+      self.unsetTransform();
+      paused = true;
+    }
   };
   self.resume = function() {
-    if (remainingDuration > 0) {
+    if (paused && remainingDuration > 0) {
       start = new Date;
       self.setTransform();
       paused = false;
