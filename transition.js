@@ -1,11 +1,10 @@
-var Transition = function(element, property, transform, duration, delay) {
+var Transition = function(element, property, transform, duration, delay, easing) {
   var self = this;
   var elem = $(element);
   var start;
   var remainingDelay = delay != undefined ? delay : 0;
   var remainingDuration = duration;
   var paused = true;
-
 
   // Borrowed from jquery.transit.js
   var div = document.createElement('div');
@@ -39,6 +38,7 @@ var Transition = function(element, property, transform, duration, delay) {
   var transitionProperty = getVendorPropertyName('transitionProperty');
   var transitionDelay = getVendorPropertyName('transitionDelay');
   var transitionDuration = getVendorPropertyName('transitionDuration');
+  var transitionEasing = getVendorPropertyName('transitionTimingFunction');
 
   self.pause = function() {
     if (!paused) {
@@ -65,6 +65,8 @@ var Transition = function(element, property, transform, duration, delay) {
   self.setTransform = function() {
     elem.css(vendorProperty, transform);
     elem.css(transitionProperty, vendorCssProperty);
+		if(easing != undefined)
+			elem.css(transitionEasing, easing);
     if (remainingDelay > 0) 
       elem.css(transitionDelay, remainingDelay + 'ms');
     if (remainingDuration > 0)
