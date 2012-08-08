@@ -26,7 +26,7 @@
     <script type="text/javascript">
       $(function() {
           var c = $('.container') 
-          var t = new Transition(c, 'opacity', '0', 10000, 5000);
+          var t = new Transition(c, 'opacity', '0', 10000, 5000, 'linear');
           c.click(function() {
               t.toggle();
           });
